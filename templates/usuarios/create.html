@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% if error %}
+<div class="alert alert-danger" role="alert">
+    {{ error }}
+</div>
+{% endif %}
+
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">Nuevo Usuario</h2>
+
+    <form method="post" action="/api/usuarios" class="p-4 shadow rounded bg-light">
+
+        <div class="mb-3">
+            <label for="dni" class="form-label">DNI:</label>
+            <input type="text" name="dni" class="form-control" value="{{ valores.dni or '' }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre:</label>
+            <input type="text" name="nombre" class="form-control" value="{{ valores.nombre or '' }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="apellido" class="form-label">Apellido:</label>
+            <input type="text" name="apellido" class="form-control" value="{{ valores.apellido or '' }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" name="email" class="form-control" id="email" value="{{ valores.email or '' }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="rol_id" class="form-label">Tipo de usuario:</label>
+            <select class="form-select" id="rol_id" name="rol_id" required>
+                <option value="" disabled {% if not valores.rol_id %}selected{% endif %}>Seleccionar rol...</option>
+                {% for rol in roles %}
+                    <option value="{{ rol.rol_id }}"
+                        {% if valores.rol_id and valores.rol_id|int == rol.rol_id %}selected{% endif %}>
+                        {{ rol.nombre }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a href="/usuarios" class="btn btn-outline-secondary">
+                ← Volver
+            </a>
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-check-circle"></i> Guardar
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

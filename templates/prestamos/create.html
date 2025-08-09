@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="mb-4 text-center">Nuevo Préstamo</h2>
+
+<form method="post" action="/api/prestamos">
+  <div class="mb-3">
+    <label for="usuario_id" class="form-label">Usuario</label>
+    <select class="form-select" id="usuario_id" name="usuario_id" required>
+      <option value="" selected disabled>Seleccionar usuario</option>
+      {% for usuario in usuarios %}
+      <option value="{{ usuario.usuario_id }}">{{ usuario.nombre }} {{ usuario.apellido }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label for="libro_id" class="form-label">Libro</label>
+    <select class="form-select" id="libro_id" name="libro_id" required>
+      <option value="" selected disabled>Seleccionar libro</option>
+      {% for libro in libros %}
+      <option value="{{ libro.libro_id }}">{{ libro.titulo }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Crear Préstamo</button>
+  <a href="/prestamos" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

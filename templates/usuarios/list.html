@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="mb-4 text-center">Listado de Usuarios</h2>
+
+<div class="mb-3 text-end">
+    <a href="/usuarios/create" class="btn btn-primary">
+        <i class="bi bi-plus-lg"></i> Nuevo Usuario
+    </a>
+</div>
+
+<style>
+  /* Altura fija para el encabezado */
+  #tabla-usuarios thead tr th {
+    height: 60px;
+    vertical-align: middle;
+  }
+  /* Ancho fijo para la columna Acciones */
+  #tabla-usuarios thead tr th:last-child,
+  #tabla-usuarios tbody tr td:last-child {
+    width: 130px;
+    white-space: nowrap;
+  }
+</style>
+
+<table id="tabla-usuarios" class="table table-striped table-hover table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>DNI</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>Tipo Usuario</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for usuario in usuarios %}
+        <tr>
+            <td>{{ usuario.dni }}</td>
+            <td>{{ usuario.nombre }}</td>
+            <td>{{ usuario.apellido }}</td>
+            <td>{{ usuario.email }}</td>
+            <td>{{ usuario.roles.nombre }}</td>
+            <td>{{ usuario.estado.nombre }}</td>
+            <td>
+                <a href="/usuarios/{{ usuario.usuario_id }}" class="btn btn-sm btn-outline-primary me-1">
+                    <i class="bi bi-pencil"></i> Editar
+                </a>
+                <form method="post" action="/api/usuarios/{{ usuario.usuario_id }}/eliminar" class="d-inline" onsubmit="return confirm('¿Estás seguro que querés eliminar este usuario?');">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                        <i class="bi bi-trash"></i> Eliminar
+                    </button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  $(document).ready(function() {
+    $('#tabla-usuarios').DataTable({
+        "language": {
+            "search": "Filtrar:",
+            "lengthMenu": "Mostrar _MENU_ usuarios por página",
+            "zeroRecords": "No se encontraron usuarios",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ usuarios",
+            "infoEmpty": "No hay usuarios disponibles",
+            "infoFiltered": "(filtrado de _MAX_ usuarios en total)"
+        }
+    });
+  });
+</script>
+{% endblock %}

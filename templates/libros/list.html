@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="mb-4 text-center">Listado de Libros</h2>
+
+<div class="mb-3 text-end">
+    <a href="/libros/create" class="btn btn-primary">
+        <i class="bi bi-plus-lg"></i> Nuevo Libro
+    </a>
+</div>
+
+<style>
+  /* Altura fija para el encabezado */
+  #tabla-libros thead tr th {
+    height: 60px;
+    vertical-align: middle;
+  }
+  /* Ancho fijo para la columna Acciones */
+  #tabla-libros thead tr th:last-child,
+  #tabla-libros tbody tr td:last-child {
+    width: 130px;
+    white-space: nowrap;
+  }
+</style>
+
+<table id="tabla-libros" class="table table-striped table-hover table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>ISBN</th>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Resumen</th>
+            <th>Categoría</th>
+            <th>Editorial</th>
+            <th>Disponibles</th>
+            <th>Total</th>
+            <th>Ubicacion</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for libro in libros %}
+        <tr>
+            <td>{{ libro.isbn }}</td>
+            <td>{{ libro.titulo }}</td>
+            <td>{{ libro.autor }}</td>
+            <td>{{ libro.resumen or "" }}</td>
+            <td>{{ libro.categoria.nombre }}</td>
+            <td>{{ libro.editorial.nombre }}</td>
+            <td>{{ libro.ejemplares_disponibles }}</td>
+            <td>{{ libro.cantidad_ejemplares }}</td>
+            <td>{{ libro.ubicacion }}</td>
+            <td>
+                <a href="/libros/{{ libro.libro_id }}" class="btn btn-sm btn-outline-primary me-1">
+                    <i class="bi bi-pencil"></i> Editar
+                </a>
+                <form method="post" action="/api/libros/{{ libro.libro_id }}/eliminar" class="d-inline" onsubmit="return confirm('¿Estás seguro que querés eliminar este libro?');">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                        <i class="bi bi-trash"></i> Eliminar
+                    </button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %} {# Este cierra el bloque content #}
+
+{% block scripts %}
+<script>
+  $(document).ready(function() {
+    $('#tabla-libros').DataTable({
+        "language": {
+            "search": "Filtrar:",
+            "lengthMenu": "Mostrar _MENU_ libros por página",
+            "zeroRecords": "No se encontraron libros",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ libros",
+            "infoEmpty": "No hay libros disponibles",
+            "infoFiltered": "(filtrado de _MAX_ libros en total)"
+        }
+    });
+  });
+</script>
+{% endblock %}

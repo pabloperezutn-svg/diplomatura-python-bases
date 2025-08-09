@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">Editar {{ usuario.nombre }} {{ usuario.apellido }}</h2>
+
+    <form method="post" action="/api/usuarios/{{ usuario.usuario_id }}/update" class="p-4 shadow rounded bg-light">
+
+        <div class="mb-3">
+            <label for="dni" class="form-label">DNI:</label>
+            <input type="text" class="form-control" id="dni" name="dni" value="{{ usuario.dni }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre:</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" value="{{ usuario.nombre }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="apellido" class="form-label">Apellido:</label>
+            <input type="text" class="form-control" id="apellido" name="apellido" value="{{ usuario.apellido }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{ usuario.email }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="rol_id" class="form-label">Tipo:</label>
+            <select class="form-select" id="rol_id" name="rol_id" required>
+                <option value="" disabled {% if not usuario %}selected{% endif %}>Seleccionar rol...</option>
+                {% for rol in roles %}
+                    <option value="{{ rol.rol_id }}"
+                        {% if usuario and usuario.rol_id == rol.rol_id %}selected{% endif %}>
+                        {{ rol.nombre }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="estado_id" class="form-label">Tipo:</label>
+            <select class="form-select" id="estado_id" name="estado_id" required>
+                <option value="" disabled {% if not usuario %}selected{% endif %}>Seleccionar estado...</option>
+                {% for estado in estados %}
+                    <option value="{{ estado.estado_id }}"
+                        {% if usuario and usuario.estado_id == estado.estado_id %}selected{% endif %}>
+                        {{ estado.nombre }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a href="/usuarios" class="btn btn-outline-secondary">
+                ← Volver
+            </a>
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-save"></i> Guardar cambios
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

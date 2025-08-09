@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">Nuevo Libro</h2>
+
+    <form method="post" action="/api/libros" class="p-4 shadow rounded bg-light">
+
+        <div class="mb-3">
+            <label for="titulo" class="form-label">Título:</label>
+            <input type="text" class="form-control" id="titulo" name="titulo" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="isbn" class="form-label">ISBN:</label>
+            <input type="int" class="form-control" id="isbn" name="isbn" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="autor_id" class="form-label">Autor:</label>
+            <select class="form-select" id="autor_id" name="autor_id" required>
+                <option value="" disabled selected>Seleccionar autor...</option>
+                {% for autor in autores %}
+                    <option value="{{ autor.autor_id }}">{{ autor.nombre }} {{ autor.apellido }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="mb-3">
+            <label for="categoria_id" class="form-label">Categoría:</label>
+            <select class="form-select" id="categoria_id" name="categoria_id" required>
+                <option value="" disabled selected>Seleccionar categoría...</option>
+                {% for categoria in categorias %}
+                    <option value="{{ categoria.categoria_id }}"> {{ categoria.nombre }} </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="editorial_id" class="form-label">Editorial:</label>
+            <select class="form-select" id="editorial_id" name="editorial_id" required>
+                <option value="" disabled selected>Seleccionar editorial...</option>
+                {% for editorial in editoriales %}
+                    <option value="{{ editorial.editorial_id }}"> {{ editorial.nombre }} </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="cantidad_ejemplares" class="form-label">Cantidad:</label>
+            <input type="int" class="form-control" id="cantidad_ejemplares" name="cantidad_ejemplares" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="ubicacion_id" class="form-label">Ubicación:</label>
+            <select class="form-select" id="ubicacion_id" name="ubicacion_id" required>
+                <option value="" disabled selected>Seleccionar ubicación...</option>
+                {% for ubicacion in ubicaciones %}
+                    <option value="{{ ubicacion.ubicacion_id }}"> {{ ubicacion.nombre }} </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="resumen" class="form-label">Resumen:</label>
+            <textarea class="form-control" id="resumen" name="resumen" rows="4"></textarea>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a href="/libros" class="btn btn-outline-secondary">
+                ← Volver
+            </a>
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-check-circle"></i> Guardar
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

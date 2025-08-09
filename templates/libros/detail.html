@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">Editar Libro</h2>
+
+    <form method="post" action="/api/libros/{{ libro.libro_id }}/update" class="p-4 shadow rounded bg-light">
+
+        <div class="mb-3">
+            <label for="titulo" class="form-label">Título:</label>
+            <input type="text" class="form-control" id="titulo" name="titulo" value="{{ libro.titulo }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="isbn" class="form-label">ISBN:</label>
+            <input type="int" class="form-control" id="isbn" name="isbn"  value="{{ libro.isbn }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="autor_id" class="form-label">Autor:</label>
+            <select class="form-select" id="autor_id" name="autor_id" required>
+                {% for autor in autores %}
+                    <option value="{{ autor.autor_id }}"
+                        {% if autor.autor_id == libro.autor_id %}selected{% endif %}>
+                        {{ autor.nombre }} {{ autor.apellido }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="editorial_id" class="form-label">Editorial:</label>
+            <select class="form-select" id="editorial_id" name="editorial_id" required>
+                {% for editorial in editoriales %}
+                    <option value="{{ editorial.editorial_id }}"
+                        {% if editorial.editorial_id == libro.editorial_id %}selected{% endif %}>
+                        {{ editorial.nombre }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="categoria_id" class="form-label">Categoría:</label>
+            <select class="form-select" id="categoria_id" name="categoria_id" required>
+                {% for categoria in categorias %}
+                    <option value="{{ categoria.categoria_id }}"
+                        {% if categoria.categoria_id == libro.categoria_id %}selected{% endif %}>
+                        {{ categoria.nombre }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="cantidad_ejemplares" class="form-label">Cantidad:</label>
+            <input type="int" class="form-control" id="cantidad_ejemplares" name="cantidad_ejemplares"  value="{{ libro.cantidad_ejemplares }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="ubicacion_id" class="form-label">Ubicación:</label>
+            <select class="form-select" id="ubicacion_id" name="ubicacion_id" required>
+                {% for ubicacion in ubicaciones %}
+                    <option value="{{ ubicacion.ubicacion_id }}"> {{ ubicacion.nombre }} </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="resumen" class="form-label">Resumen:</label>
+            <textarea class="form-control" id="resumen" name="resumen" rows="4">{{ libro.resumen }}</textarea>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a href="/libros" class="btn btn-outline-secondary">
+                ← Volver
+            </a>
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-save"></i> Guardar cambios
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

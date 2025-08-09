@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">Nuevo Autor</h2>
+
+    <form method="post" action="/api/autores" class="p-4 shadow rounded bg-light">
+
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre:</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="apellido" class="form-label">Apellido:</label>
+            <input type="text" class="form-control" id="apellido" name="apellido" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento:</label>
+            <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento">
+        </div>
+
+        <div class="mb-3">
+            <label for="nacionalidad_id" class="form-label">Nacionalidad:</label>
+            <select class="form-select" id="nacionalidad_id" name="nacionalidad_id" required>
+                <option value="" disabled selected>Seleccionar nacionalidad...</option>
+                {% for nacionalidad in nacionalidades %}
+                    <option value="{{ nacionalidad.nacionalidad_id }}">{{ nacionalidad.sdes }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="biografia" class="form-label">Biografía:</label>
+            <textarea class="form-control" id="biografia" name="biografia" rows="5"></textarea>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a href="/autores" class="btn btn-outline-secondary">
+                ← Volver
+            </a>
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-check-circle"></i> Guardar
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">Editar Autor</h2>
+
+    <form method="post" action="/api/autores/{{ autor.autor_id }}/update" class="p-4 shadow rounded bg-light">
+
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre:</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" value="{{ autor.nombre }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="apellido" class="form-label">Apellido:</label>
+            <input type="text" class="form-control" id="apellido" name="apellido" value="{{ autor.apellido }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento:</label>
+            <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento"
+                   value="{{ autor.fecha_nacimiento.strftime('%Y-%m-%d') if autor.fecha_nacimiento else '' }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="nacionalidad_id" class="form-label">Nacionalidad:</label>
+            <select class="form-select" id="nacionalidad_id" name="nacionalidad_id" required>
+                <option value="" disabled {% if not autor.nacionalidad %}selected{% endif %}>Seleccionar nacionalidad...</option>
+                {% for nacionalidad in nacionalidades %}
+                    <option value="{{ nacionalidad.nacionalidad_id }}"
+                        {% if autor.nacionalidad and autor.nacionalidad.nacionalidad_id == nacionalidad.nacionalidad_id %}selected{% endif %}>
+                        {{ nacionalidad.sdes }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="biografia" class="form-label">Biografía:</label>
+            <textarea class="form-control" id="biografia" name="biografia" rows="5">{{ autor.biografia or '' }}</textarea>
+        </div>
+
+        <div class="d-flex justify-content-between mb-3">
+            <!-- Botón que envía el mismo form a la ruta "buscar en Wikipedia" -->
+            <button formaction="/api/autores/bio/{{ autor.autor_id }}" formmethod="post" type="submit" class="btn btn-outline-primary">
+                🔍 Buscar en Wikipedia
+            </button>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a href="/autores" class="btn btn-outline-secondary">
+                ← Volver
+            </a>
+            <!-- Botón que envía el formulario a la ruta update (por defecto en el form) -->
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-save"></i> Guardar cambios
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}
