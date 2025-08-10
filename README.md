@@ -4,7 +4,7 @@
 
 Este proyecto es una versión reducida del sistema completo de gestión de bibliotecas desarrollado como ejemplo en la diplomatura. En esta versión se ha dejado implementada únicamente la parte del backend relacionada con la gestión de **autores**.
 
-El objetivo para ustedes, como alumnos, es **completar el backend** implementando las funcionalidades faltantes para la gestión de:
+Su misión, si decide aceptarla, es **completar el backend** implementando las funcionalidades faltantes para la gestión de:
 
 - [ ] Gestión de libros
 - [ ] Gestión de préstamos  
