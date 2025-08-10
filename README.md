@@ -38,7 +38,7 @@ De esta forma podrán aplicar los conceptos vistos en clases y consolidar habili
 1. Realizar un **fork** de este repositorio a su propia cuenta de GitHub.  
 2. Clonar su fork localmente con:  
    ```bash
-   git clone https://github.com/usuario/alumno-biblioteca.git
+   git clone https://github.com/usuario/diplomatura-python-bases
    ```
 
 ## Estructura del Proyecto
