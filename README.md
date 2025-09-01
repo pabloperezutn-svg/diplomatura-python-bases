@@ -50,18 +50,34 @@ DIPLOMATURA-PYTHON-BASES/
 ├── app/
 │   ├── api/
 │   │   ├── autores.py        # Endpoints backend para autores
+|   |   ├── libros.py         # Endpoints backend para libros
+|   |   ├── prestamos.py      # Endpoints backend para prestamos
+|   |   ├── usuarios.py       # Endpoints backend para usuarios
 │   │   └── wikipedia.py      # Integración con Wikipedia API
+|   |
 │   ├── core/
 │   │   ├── autores.py        # CRUD autores
+│   │   ├── libros.py         # CRUD libros
+│   │   ├── prestamos.py      # CRUD prestamos
+│   │   ├── usuarios.py       # CRUD usuarios
 │   │   ├── database.py       # Configuración DB
 │   │   └── nacionalidades.py # CRUD nacionalidades
 │   ├── frontend/
+│   │   ├── libros.py         # Endpoints frontend para libros (HTML/Jinja2)
+│   │   ├── prestamos.py      # Endpoints frontend para prestamos (HTML/Jinja2)
+│   │   ├── usuarios.py       # Endpoints frontend para usuarios (HTML/Jinja2)
 │   │   └── autores.py        # Endpoints frontend para autores (HTML/Jinja2)
 │   ├── models/
 │   │   ├── __init__.py       # Exporta modelos principales (Autor, Nacionalidad)
 │   │   ├── autores.py        # Modelo autores
+│   │   ├── libros.py         # Modelo libros
+│   │   ├── prestamos.py      # Modelo prestamos
+│   │   ├── usuarios.py       # Modelo usuarios
 │   │   └── nacionalidades.py # Modelo nacionalidades
 │   ├── schemas/
+│   │   ├── libros.py         # Esquemas Pydantic
+│   │   ├── prestamos.py      # Esquemas Pydantic
+│   │   ├── usuarios.py       # Esquemas Pydantic
 │   │   └── autores.py        # Esquemas Pydantic
 │   ├── instance/             # Instancia DB (Flask)
 │   ├── static/               # Archivos estáticos (CSS/JS)
