@@ -2,8 +2,7 @@ from sqlalchemy import Column, Integer, String, Date, Boolean, Identity, TIMESTA
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from sqlalchemy import ForeignKey
-
-from . import Base  # Importa la clase Base desde el __init__.py
+from app.core.database import Base
 
 class Usuario(Base):
     __tablename__ = "usuarios"

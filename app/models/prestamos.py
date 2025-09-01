@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, Date, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
-from . import Base  # Importa la clase Base desde el __init__.py
+from app.core.database import Base
 
 class Prestamo(Base):
     __tablename__ = "prestamos"

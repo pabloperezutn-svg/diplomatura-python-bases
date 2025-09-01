@@ -29,4 +29,3 @@ class Libro(LibroBase):
 
     class Config:
         orm_mode = True  # Permite crear un Libro desde un objeto SQLAlchemy
-

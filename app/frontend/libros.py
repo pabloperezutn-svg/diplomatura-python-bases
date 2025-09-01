@@ -1,54 +1,68 @@
 from typing import List
-from fastapi import Depends, Request, HTTPException, APIRouter
-from fastapi.responses import HTMLResponse
+from fastapi import Depends, Request, HTTPException, APIRouter, Form
+from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy.orm import Session
 from fastapi.templating import Jinja2Templates
+import httpx
+from starlette.status import HTTP_303_SEE_OTHER
+
 from app.core import libros as crud
 from app.models import libros as models
-from app.schemas import autores as schemas
+from app.schemas import libros as schemas
 from app.core.database import get_db
-
-
-
+from app.core import libros as crud
 
 router = APIRouter(tags=["Frontend Libros"])
 templates = Jinja2Templates(directory="templates")
 
+API_BASE_URL = "http://127.0.0.1:8000/libros"  # URL
 
-@router.post("/libros/", response_model=schemas.Libro)
-def create_libro(libro: schemas.LibroCreate, db: Session = Depends(get_db)):
-    """Crea un nuevo libro."""
-    return crud.create_libro(db=db, libro=libro)
-
-
-@router.get("/libros/", response_model=List[schemas.Libro])
-def read_libros(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    """Obtiene una lista de libros."""
-    libros = crud.get_libros(db, skip=skip, limit=limit)
-    return libros
+@router.get("/libros", response_class=HTMLResponse)
+async def list_libros(request: Request, db: Session = Depends(get_db)):
+    """Shows all libros."""
+    libros = crud.get_libros(db)
+    return templates.TemplateResponse("libros/list.html", {"request": request, "libros": libros})
 
 
-@router.get("/libros/{libro_id}", response_model=schemas.Libro)
-def read_libro(libro_id: int, db: Session = Depends(get_db)):
-    """Obtiene un libro por su ID."""
-    db_libro = crud.get_libro(db, libro_id=libro_id)
-    if db_libro is None:
-        raise HTTPException(status_code=404, detail="Libro no encontrado")
-    return db_libro
+@router.get("/libros/create", response_class=HTMLResponse)
+async def show_create_form(request: Request):
+    """Shows the form to create a new libro."""
+    return templates.TemplateResponse("libros/create.html", {"request": request})
 
 
-@app.put("/libros/{libro_id}", response_model=schemas.Libro)
-def update_libro(libro_id: int, libro: schemas.LibroCreate, db: Session = Depends(get_db)):
-    """Actualiza un libro existente."""
-    db_libro = crud.update_libro(db, libro_id=libro_id, libro=libro)
-    if db_libro is None:
-        raise HTTPException(status_code=404, detail="Libro no encontrado")
-    return db_libro
-
-
-@app.delete("/libros/{libro_id}", response_model=bool)
-def delete_libro(libro_id: int, db: Session = Depends(get_db)):
-    """Elimina un libro."""
-    if not crud.delete_libro(db, libro_id=libro_id):
-        raise HTTPException(status_code=404, detail="Libro no encontrado")
-    return True
+@router.post("/libros/create", response_class=HTMLResponse)
+async def create_libro(request: Request,
+                        titulo: str = Form(...),
+                        autor_id: int = Form(...),
+                        editorial_id: int = Form(None),
+                        isbn: int = Form(None),
+                        anio_publicacion: int = Form(None),
+                        edicion: str = Form(None),
+                        categoria_id: int = Form(None),
+                        cantidad_ejemplares: int = Form(1),
+                        ejemplares_disponibles: int = Form(1),
+                        resumen: str = Form(None),
+                        portada: bytes = Form(None),
+                        ubicacion_id: int = Form(None),
+                        db: Session = Depends(get_db)
+                        ):
+    """Adds a new libro and redirects to the list."""
+    libro_data = {
+        "titulo": titulo,
+        "autor_id": autor_id,
+        "editorial_id": editorial_id,
+        "isbn": isbn,
+        "anio_publicacion": anio_publicacion,
+        "edicion": edicion,
+        "categoria_id": categoria_id,
+        "cantidad_ejemplares": cantidad_ejemplares,
+        "ejemplares_disponibles": ejemplares_disponibles,
+        "resumen": resumen,
+        "portada": portada,
+        "ubicacion_id": ubicacion_id,
+    }
+    try:
+        crud.create_libro(db, libro=schemas.LibroCreate(**libro_data))
+        return RedirectResponse("/libros", status_code=HTTP_303_SEE_OTHER)
+    except Exception as e:
+        return templates.TemplateResponse("libros/create.html", {"request": request, "error": f"Failed to create libro: {e}"})

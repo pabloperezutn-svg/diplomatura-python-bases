@@ -3,7 +3,7 @@
 from sqlalchemy import Column, Integer, String, Date, ForeignKey, Text, LargeBinary, TIMESTAMP, Identity
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from . import Base  # Importa la clase Base desde el __init__.py
+from app.core.database import Base
 
 class Libro(Base):
     __tablename__ = "libros"

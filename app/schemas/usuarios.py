@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
-from datetime import date,datetime
-from enum import Enum
+from datetime import date, datetime
 
 class UsuarioBase(BaseModel):
     dni: str
@@ -24,4 +23,4 @@ class Usuario(UsuarioBase):
     fecha_registro: datetime
 
     class Config:
-        orm_mode = True    
+        orm_mode = True
