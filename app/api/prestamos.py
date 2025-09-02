@@ -2,12 +2,11 @@ from typing import List
 from fastapi import Depends, APIRouter, HTTPException, Form
 from fastapi.responses import RedirectResponse
 from starlette.status import HTTP_303_SEE_OTHER
-from datetime import date, datetime
+from datetime import date
 
 from sqlalchemy.orm import Session
 
 from app.core import prestamos as crud
-from app.models import prestamos as models
 from app.schemas import prestamos as schemas
 from app.schemas.prestamos import EstadoPrestamo  # Importa el Enum
 from app.core.database import get_db

@@ -2,12 +2,10 @@ from typing import List
 from fastapi import Depends, APIRouter, HTTPException, Form
 from fastapi.responses import RedirectResponse
 from starlette.status import HTTP_303_SEE_OTHER
-from datetime import date
 
 from sqlalchemy.orm import Session
 
 from app.core import libros as crud
-from app.models import libros as models
 from app.schemas import libros as schemas
 from app.core.database import get_db
 
