@@ -8,7 +8,6 @@ from app.api.wikipedia import router as wikipedia_router
 from app.frontend.autores import router as frontend_autores_router
 from app.frontend.prestamos import router as frontend_prestamos_router
 from app.frontend.usuarios import router as frontend_usuarios_router
-from app.frontend.libros import router as frontend_libros_router
 app = FastAPI(title="Open Biblioteca API", version="1.0.1")
 
 # Montar archivos estáticos
