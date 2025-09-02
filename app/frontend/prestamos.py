@@ -1,8 +1,8 @@
-from fastapi import APIRouter, Request, Form, HTTPException
+from fastapi import APIRouter, Request, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 import httpx
-from datetime import datetime, date
+from datetime import date
 from starlette.status import HTTP_303_SEE_OTHER
 
 router = APIRouter(tags=["Frontend Prestamos"])

@@ -1,6 +1,6 @@
 # app/models/libros.py
 
-from sqlalchemy import Column, Integer, String, Date, ForeignKey, Text, LargeBinary, TIMESTAMP, Identity
+from sqlalchemy import Column, Integer, String, ForeignKey, Text, LargeBinary, TIMESTAMP, Identity
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.core.database import Base

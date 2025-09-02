@@ -7,7 +7,6 @@ from datetime import date
 from sqlalchemy.orm import Session
 
 from app.core import usuarios as crud
-from app.models import usuarios as models
 from app.schemas import usuarios as schemas
 from app.core.database import get_db
 
