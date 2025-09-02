@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
-from datetime import date,datetime
-from enum import Enum
+from datetime import datetime
 
 
 class LibroBase(BaseModel):

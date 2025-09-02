@@ -1,13 +1,11 @@
 from typing import List
-from fastapi import Depends, Request, HTTPException, APIRouter, Form
+from fastapi import Depends, Request, APIRouter, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy.orm import Session
 from fastapi.templating import Jinja2Templates
-import httpx
 from starlette.status import HTTP_303_SEE_OTHER
 
 from app.core import libros as crud
-from app.models import libros as models
 from app.schemas import libros as schemas
 from app.core.database import get_db
 from app.core import libros as crud
